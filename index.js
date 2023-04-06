@@ -1,6 +1,6 @@
 import { createCharacterCard } from "./components/card/card.js";
 import { createSearchBar } from "./components/search-bar/search-bar.js";
-
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
 import { changePaginationContent } from "../components/nav-pagination/nav-pagination.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
@@ -12,9 +12,11 @@ const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
-// Create the search bar and append
+// Create DOM Elements for the search bar and append
 searchBarContainer.append(createSearchBar());
 const searchBar = document.querySelector('[data-js="search-bar"]');
+// Create DOM Elemnts for the navigation bar
+// createPagination();
 
 // States
 let page = 1;
@@ -25,11 +27,11 @@ console.log(maxPage);
 
 await fetchCharacters(fetchurl);
 
-nextButton.addEventListener("click", async () => {
+nextButton.addEventListener("click", () => {
   changePage(1);
 });
 
-prevButton.addEventListener("click", async () => {
+prevButton.addEventListener("click", () => {
   changePage(-1);
 });
 
