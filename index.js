@@ -12,3 +12,27 @@ const pagination = document.querySelector('[data-js="pagination"]');
 const maxPage = 1;
 const page = 1;
 const searchQuery = "";
+
+import { createCharacterCard } from "./components/card/card.js";
+async function fetchCharacter() {
+  try {
+    let character = await fetch("https://rickandmortyapi.com/api/character");
+    let fetchedCharacter = await character.json();
+    fetchedCharacter = fetchedCharacter.results;
+    console.log(fetchedCharacter);
+
+    fetchedCharacter.forEach((character) => {
+      console.log(
+        character.name,
+        character.status,
+        character.type,
+        character.episode.length,
+        character.image
+      );
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+fetchCharacter();
