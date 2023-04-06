@@ -76,7 +76,7 @@ export async function fetchCharacters(url) {
       });
     }
     console.log("maxPage", maxPage);
-    maxPage = fetchedCharactersData.info.pages;
+    maxPage = charactersDataJson.info.pages;
     createPagination(maxPage, page);
   } catch (error) {
     maxPage = 1;
