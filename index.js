@@ -20,15 +20,16 @@ async function fetchCharacter() {
     let character = await fetch("https://rickandmortyapi.com/api/character");
     let fetchedCharacter = await character.json();
     fetchedCharacter = fetchedCharacter.results;
-    console.log(fetchedCharacter);
 
     fetchedCharacter.forEach((character) => {
-      console.log(
-        character.name,
-        character.status,
-        character.type,
-        character.episode.length,
-        character.image
+      cardContainer.append(
+        createCharacterCard(
+          character.name,
+          character.status,
+          character.type,
+          character.episode.length,
+          character.image
+        )
       );
     });
   } catch (error) {
@@ -37,19 +38,3 @@ async function fetchCharacter() {
 }
 
 fetchCharacter();
-
-const characterName = "Rick M.";
-const characterStatus = "Alive";
-const characterType = "";
-const characterOccurrences = 51;
-const characterImageSource =
-  "https://rickandmortyapi.com/api/character/avatar/1.jpeg";
-cardContainer.append(
-  createCharacterCard(
-    characterName,
-    characterStatus,
-    characterType,
-    characterOccurrences,
-    characterImageSource
-  )
-);
