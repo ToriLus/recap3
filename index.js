@@ -58,12 +58,12 @@ export function getPage() {
 export async function fetchCharacters(url) {
   try {
     cardContainer.innerHTML = "";
-    const character = await fetch(url);
-    const fetchedCharactersData = await character.json();
-    const fetchedCharacters = fetchedCharactersData.results;
-    console.log("results", fetchedCharacters);
-    if (fetchedCharacters) {
-      fetchedCharacters.forEach((character) => {
+    const charactersData = await fetch(url);
+    const charactersDataJson = await charactersData.json();
+    const characters = charactersDataJson.results;
+    console.log("results", characters);
+    if (characters) {
+      characters.forEach((character) => {
         cardContainer.append(
           createCharacterCard(
             character.name,
