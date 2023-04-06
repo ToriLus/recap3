@@ -13,7 +13,7 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-export let maxPage = 1;
+export let maxPage;
 export let page = 1;
 export const searchQuery = "";
 export let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
