@@ -7,11 +7,14 @@ const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-// const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
 const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
+
+// Create the search bar and append
+searchBarContainer.append(createSearchBar());
+const searchBar = document.querySelector('[data-js="search-bar"]');
 
 // States
 let page = 1;
@@ -30,15 +33,10 @@ prevButton.addEventListener("click", async () => {
   changePage(-1);
 });
 
-searchBarContainer.append(createSearchBar());
-const searchBar = document.querySelector('[data-js="search-bar"]');
-
 searchBar.addEventListener("submit", async (e) => {
   e.preventDefault();
   const searchBarData = new FormData(e.target);
-  const searchBarEntry = Object.fromEntries(searchBarData);
-  searchQuery = searchBarEntry.query;
-
+  searchQuery = Object.fromEntries(searchBarData);
   fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
   try {
     page = 1;
