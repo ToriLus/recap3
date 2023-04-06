@@ -11,9 +11,9 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 1;
-const page = 1;
-const searchQuery = "";
+let maxPage = 1;
+let page = 1;
+let searchQuery = "";
 
 async function fetchCharacter() {
   try {
@@ -38,3 +38,11 @@ async function fetchCharacter() {
 }
 
 fetchCharacter();
+
+searchBar.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const searchBarData = new FormData(e.target);
+  const searchBarEntry = Object.fromEntries(searchBarData);
+  searchQuery = searchBarEntry.query;
+  console.log(searchQuery);
+});
