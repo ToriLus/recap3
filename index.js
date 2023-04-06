@@ -39,10 +39,11 @@ export async function fetchCharacter(url) {
         );
       });
     }
+    createPagination(url);
+    console.log(url);
   } catch (error) {
     console.log(error);
   }
 }
 
 searchBarContainer.append(createSearchBar(fetchurl));
-fetchCharacter(fetchurl);

@@ -1,4 +1,5 @@
 import { fetchCharacter } from "../../index.js";
+import { createPagination, page } from "../nav-pagination/nav-pagination.js";
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
@@ -23,20 +24,21 @@ export function createSearchBar(fetchurl) {
       alt=""
     />
   </button>`;
-
+  const url = `${fetchurl}&name=${searchQuery}`;
+  fetchCharacter(url);
   searchBar.addEventListener("submit", async (e) => {
     e.preventDefault();
     const searchBarData = new FormData(e.target);
     const searchBarEntry = Object.fromEntries(searchBarData);
     searchQuery = searchBarEntry.query;
-    const url = `${fetchurl}&name=${searchQuery}`;
+
     console.log(url);
     try {
       await fetchCharacter(url);
     } catch (error) {
       console.log("nothing");
     }
-    console.log(searchQuery);
   });
+
   return searchBar;
 }
