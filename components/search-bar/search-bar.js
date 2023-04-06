@@ -3,6 +3,7 @@ const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
+export let searchQuery = "";
 
 export function createSearchBar(fetchurl) {
   const searchBar = document.createElement("form");
@@ -27,7 +28,7 @@ export function createSearchBar(fetchurl) {
     e.preventDefault();
     const searchBarData = new FormData(e.target);
     const searchBarEntry = Object.fromEntries(searchBarData);
-    const searchQuery = searchBarEntry.query;
+    searchQuery = searchBarEntry.query;
     const url = `${fetchurl}&name=${searchQuery}`;
     console.log(url);
     try {

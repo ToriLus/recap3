@@ -1,5 +1,5 @@
 import { fetchCharacter } from "../../index.js";
-
+import { createSearchBar, searchQuery } from "../search-bar/search-bar.js";
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
@@ -12,7 +12,9 @@ const pagination = document.querySelector('[data-js="pagination"]');
 
 let maxPage = 1;
 let page = 1;
-let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
+let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+// const url = `${fetchurl}&name=${searchQuery}`
+// if (searchQuery){fetchurl = url}
 
 export async function createPagination(url) {
   let getInfo = await fetch(url);
@@ -32,7 +34,7 @@ nextButton.addEventListener("click", () => {
     page = maxPage;
   }
   createPagination(fetchurl);
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
+  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
   fetchCharacter(fetchurl);
 });
 prevButton.addEventListener("click", () => {
@@ -41,7 +43,7 @@ prevButton.addEventListener("click", () => {
   if (page <= 0) {
     page = 1;
   }
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
+  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
   fetchCharacter(fetchurl);
 
   createPagination(fetchurl);
