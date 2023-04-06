@@ -14,17 +14,20 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-export let maxPage;
-export let page = 1;
-// export let searchQuery=""
-export let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
+let page = 1;
+let searchQuery = "";
+let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
+let maxPage;
+console.log(maxPage);
+
+await fetchCharacter(fetchurl);
 
 export async function fetchCharacter(url) {
   try {
     cardContainer.innerHTML = "";
-    let character = await fetch(url);
-    let fetchedCharacter = await character.json();
-    fetchedCharacter = fetchedCharacter.results;
+    const character = await fetch(url);
+    const fetchedCharacterData = await character.json();
+    const fetchedCharacter = fetchedCharacterData.results;
     console.log("results", fetchedCharacter);
     if (fetchedCharacter) {
       fetchedCharacter.forEach((character) => {
@@ -39,11 +42,51 @@ export async function fetchCharacter(url) {
         );
       });
     }
-    createPagination(url);
-    console.log(url);
+    console.log("maxPage", maxPage);
+    maxPage = fetchedCharacterData.info.pages;
+    createPagination(maxPage, page);
   } catch (error) {
-    console.log(error);
+    maxPage = 1;
+    page = 1;
+    createPagination(maxPage, page);
+    // alert("go cry in a corner");
   }
 }
 
-searchBarContainer.append(createSearchBar(fetchurl));
+nextButton.addEventListener("click", async () => {
+  cardContainer.innerHTML = "";
+  page = page + 1;
+  if (page >= maxPage) {
+    page = maxPage;
+  }
+  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+  await fetchCharacter(fetchurl);
+  console.log(maxPage);
+});
+prevButton.addEventListener("click", async () => {
+  cardContainer.innerHTML = "";
+  page = page - 1;
+  if (page <= 0) {
+    page = 1;
+  }
+  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+  await fetchCharacter(fetchurl);
+});
+
+searchBarContainer.append(createSearchBar());
+const searchBar = document.querySelector('[data-js="search-bar"]');
+
+searchBar.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const searchBarData = new FormData(e.target);
+  const searchBarEntry = Object.fromEntries(searchBarData);
+  searchQuery = searchBarEntry.query;
+
+  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+  try {
+    page = 1;
+    await fetchCharacter(fetchurl);
+  } catch (error) {
+    console.log("nothing");
+  }
+});
