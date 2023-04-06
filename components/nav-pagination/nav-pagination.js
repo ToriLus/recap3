@@ -1,23 +1,30 @@
 import { createNavButton } from "../nav-button/nav-button.js";
-const cardContainer = document.querySelector('[data-js="card-container"]');
-const searchBarContainer = document.querySelector(
-  '[data-js="search-bar-container"]'
-);
+import {
+  getPage,
+  setPage,
+  getMaxPage,
+  getSearchQuery,
+  setRickMortyURL,
+  fetchCharacters,
+} from "../../index.js";
 const navContainer = document.querySelector("[data-js=navigation]");
 const pagination = document.querySelector('[data-js="pagination"]');
 
-// let maxPage = 1;
-// export let page = 1;
-// let fetchurl = `https://rickandmortyapi.com/api/character?page`;
-
 export function createPagination() {
   navContainer.replaceChildren();
-  const prevButton = createNavButton("button-prev", "previous");
+  const prevButton = createNavButton("button--prev", "button-prev", "previous");
   const spanElement = document.createElement("span");
   spanElement.classList.add("navigation__pagination");
   spanElement.setAttribute("data-js", "pagination");
   spanElement.innerText = "1/1";
-  const nextButton = createNavButton("button-prev", "next");
+  const nextButton = createNavButton("button--next", "button-next", "next");
+  nextButton.addEventListener("click", () => {
+    changePage(1);
+  });
+
+  prevButton.addEventListener("click", () => {
+    changePage(-1);
+  });
   navContainer.append(prevButton, spanElement, nextButton);
 }
 
@@ -26,8 +33,14 @@ export function changePaginationContent(maxPage, page) {
   pagination.innerText = `${page} / ${maxPage}`;
 }
 
-// {/* <button class="button button--prev" data-js="button-prev">
-// previous
-// </button>
-// <span class="navigation__pagination" data-js="pagination">1 / 1</span>
-// <button class="button button--next" data-js="button-next">next</button> */}
+async function changePage(changeDirection) {
+  let page = getPage();
+  const maxPage = getMaxPage();
+  const searchQuery = getSearchQuery();
+  changeDirection > 0 ? setPage(++page) : setPage(--page);
+  if (page <= 0) page = 1;
+  if (page >= maxPage) page = maxPage;
+  const fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+  setRickMortyURL(fetchurl);
+  await fetchCharacters(fetchurl);
+}

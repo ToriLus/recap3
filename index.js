@@ -27,13 +27,13 @@ console.log(maxPage);
 
 await fetchCharacters(fetchurl);
 
-nextButton.addEventListener("click", () => {
-  changePage(1);
-});
+// nextButton.addEventListener("click", () => {
+//   changePage(1);
+// });
 
-prevButton.addEventListener("click", () => {
-  changePage(-1);
-});
+// prevButton.addEventListener("click", () => {
+//   changePage(-1);
+// });
 
 searchBar.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -68,8 +68,9 @@ export async function fetchCharacters(url) {
         );
       });
     }
-    console.log("maxPage", maxPage);
+    console.log("page", page);
     maxPage = charactersDataJson.info.pages;
+    console.log("maxPage", maxPage);
     changePaginationContent(maxPage, page);
   } catch (error) {
     maxPage = 1;
@@ -79,18 +80,30 @@ export async function fetchCharacters(url) {
 }
 
 // Change page
-async function changePage(changeDirection) {
-  changeDirection > 0 ? page++ : page--;
-  if (page <= 0) page = 1;
-  if (page >= maxPage) page = maxPage;
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  await fetchCharacters(fetchurl);
-  console.log(maxPage);
+// async function changePage(changeDirection) {
+//   changeDirection > 0 ? page++ : page--;
+//   if (page <= 0) page = 1;
+//   if (page >= maxPage) page = maxPage;
+//   fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+//   await fetchCharacters(fetchurl);
+//   console.log(maxPage);
+// }
+
+export function setPage(pageValue) {
+  page = pageValue;
+}
+export function getPage() {
+  return page;
 }
 
-// export function setPage(value) {
-//   page = value;
-// }
-// export function getPage() {
-//   return page;
-// }
+export function getMaxPage() {
+  return maxPage;
+}
+
+export function getSearchQuery() {
+  return searchQuery;
+}
+
+export function setRickMortyURL(url) {
+  fetchurl = url;
+}
