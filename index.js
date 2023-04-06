@@ -36,7 +36,7 @@ prevButton.addEventListener("click", async () => {
 searchBar.addEventListener("submit", async (e) => {
   e.preventDefault();
   const searchBarData = new FormData(e.target);
-  searchQuery = Object.fromEntries(searchBarData);
+  searchQuery = Object.fromEntries(searchBarData).query;
   fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
   try {
     page = 1;
