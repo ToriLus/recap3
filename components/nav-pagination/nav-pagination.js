@@ -10,13 +10,14 @@ const pagination = document.querySelector('[data-js="pagination"]');
 // export let page = 1;
 // let fetchurl = `https://rickandmortyapi.com/api/character?page`;
 
-export function createPagination() {
+export async function createPagination() {
+  navContainer.replaceChildren();
   const prevButton = createNavButton("button-prev", "previous");
   const spanElement = document.createElement("span");
   spanElement.classList.add("navigation__pagination");
   spanElement.setAttribute("data-js", "pagination");
   spanElement.innerText = "1/1";
-  const nextButton = createNavButton("button-prev", "previous");
+  const nextButton = createNavButton("button-prev", "next");
   navContainer.append(prevButton, spanElement, nextButton);
 }
 
