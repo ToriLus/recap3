@@ -9,6 +9,6 @@ const pagination = document.querySelector('[data-js="pagination"]');
 // export let page = 1;
 // let fetchurl = `https://rickandmortyapi.com/api/character?page`;
 
-export function createPagination(maxPage, page) {
+export function changePaginationContent(maxPage, page) {
   pagination.innerText = `${page} / ${maxPage}`;
 }

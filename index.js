@@ -1,7 +1,7 @@
 import { createCharacterCard } from "./components/card/card.js";
 import { createSearchBar } from "./components/search-bar/search-bar.js";
 
-import { createPagination } from "../components/nav-pagination/nav-pagination.js";
+import { changePaginationContent } from "../components/nav-pagination/nav-pagination.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -68,11 +68,11 @@ export async function fetchCharacters(url) {
     }
     console.log("maxPage", maxPage);
     maxPage = charactersDataJson.info.pages;
-    createPagination(maxPage, page);
+    changePaginationContent(maxPage, page);
   } catch (error) {
     maxPage = 1;
     page = 1;
-    createPagination(maxPage, page);
+    changePaginationContent(maxPage, page);
   }
 }
 
