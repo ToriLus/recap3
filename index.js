@@ -16,7 +16,7 @@ const pagination = document.querySelector('[data-js="pagination"]');
 searchBarContainer.append(createSearchBar());
 const searchBar = document.querySelector('[data-js="search-bar"]');
 // Create DOM Elemnts for the navigation bar
-await createPagination();
+createPagination();
 
 // States
 let page = 1;
