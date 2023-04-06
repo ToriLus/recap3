@@ -48,13 +48,6 @@ searchBar.addEventListener("submit", async (e) => {
   }
 });
 
-export function setPage(value) {
-  page = value;
-}
-export function getPage() {
-  return page;
-}
-
 export async function fetchCharacters(url) {
   try {
     cardContainer.innerHTML = "";
@@ -94,3 +87,10 @@ async function changePage(changeDirection) {
   await fetchCharacters(fetchurl);
   console.log(maxPage);
 }
+
+// export function setPage(value) {
+//   page = value;
+// }
+// export function getPage() {
+//   return page;
+// }
