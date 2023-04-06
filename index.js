@@ -39,10 +39,18 @@ async function fetchCharacter() {
 
 fetchCharacter();
 
-searchBar.addEventListener("submit", (e) => {
+const fetchUrl = `https://rickandmortyapi.com/api/character/?page=${page}`;
+
+searchBar.addEventListener("submit", async (e) => {
   e.preventDefault();
   const searchBarData = new FormData(e.target);
   const searchBarEntry = Object.fromEntries(searchBarData);
   searchQuery = searchBarEntry.query;
+
+  const url = `${fetchUrl}name=morty`;
+  const character = await fetch(url);
+  const fetchedCharacter = await character.json();
+  fetchedCharacter = fetchedCharacter.results;
+
   console.log(searchQuery);
 });
