@@ -19,9 +19,13 @@ updateCharacterCards();
 // Creating and appending the search bar
 createSearchBar();
 
-export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
+export async function updateCharacterCards(
+  newPage = 1,
+  newSearchQuery = searchQuery
+) {
   try {
     // Update states if required
+    console.log("updateCharacterCards", newSearchQuery);
     updateStates(newPage, newSearchQuery);
     // Fetch Rick and Morty data
     const charactersData = await fetch(fetchUrl);
@@ -31,6 +35,7 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     maxPage = charactersDataJson.info.pages;
 
     // Update states,pagination and cards
+    console.log("maxPage", maxPage);
     changePaginationContent(maxPage, page);
     createCharacterCards(characters);
   } catch (error) {

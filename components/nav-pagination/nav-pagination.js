@@ -32,6 +32,7 @@ export function changePaginationContent(maxPage, page) {
 async function changePage(changeDirection) {
   let page = getPage();
   const maxPage = getMaxPage();
+  console.log("max Page from change Page", maxPage);
   changeDirection === "forwards" ? ++page : --page;
   if (page <= 0) page = 1;
   if (page >= maxPage) page = maxPage;
