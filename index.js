@@ -2,7 +2,11 @@ import {
   createCharacterCards,
   emptyCardContainer,
 } from "./components/card/card.js";
-import { createSearchBar } from "./components/search-bar/search-bar.js";
+import {
+  createSearchBar,
+  displayErrorBar,
+  hideErrorBar,
+} from "./components/search-bar/search-bar.js";
 import { createPagination } from "./components/nav-pagination/nav-pagination.js";
 import { changePaginationContent } from "../components/nav-pagination/nav-pagination.js";
 
@@ -32,10 +36,11 @@ export async function updateCharacterCards(
       maxPage = page = "-";
       changePaginationContent(maxPage, page);
       emptyCardContainer();
+      displayErrorBar();
       console.error("Bad Request");
-      alert("Searched character not available!");
       return;
     }
+    hideErrorBar();
     const charactersDataJson = await response.json();
     // Get characters and set max page
     const characters = charactersDataJson.results;
