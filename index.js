@@ -8,19 +8,18 @@ const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
 
-// Create DOM Elements for the search bar and append
-searchBarContainer.append(createSearchBar());
-const searchBar = document.querySelector('[data-js="search-bar"]');
-// Create DOM Elemnts for the navigation bar
-
 // States
 let page = 1;
 let searchQuery = "";
 let fetchurl = "";
-let maxPage;
-console.log(maxPage);
+let maxPage = 1;
 
+// Creating and appending the search bar
+searchBarContainer.append(createSearchBar());
+
+// Create DOM Elemnts for the navigation bar
 await createPagination();
+// Initial fill of the page with the cards
 await updateCharacterCards();
 
 export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
