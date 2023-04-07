@@ -16,22 +16,18 @@ const searchBar = document.querySelector('[data-js="search-bar"]');
 // States
 let page = 1;
 let searchQuery = "";
-let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
+let fetchurl = "";
 let maxPage;
 console.log(maxPage);
 
 await createPagination();
-await updateCharacterCards(fetchurl);
+await updateCharacterCards();
 
-export async function updateCharacterCards(
-  newURL,
-  newPage = null,
-  newSearchQuery = null
-) {
+export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
-    fetchurl = newURL;
     if (newPage) page = newPage;
     if (newSearchQuery) searchQuery = newSearchQuery;
+    fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
     cardContainer.innerHTML = "";
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();

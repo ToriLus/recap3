@@ -38,5 +38,5 @@ async function changePage(changeDirection) {
   if (page <= 0) page = 1;
   if (page >= maxPage) page = maxPage;
   const urlCharacterCardsOnNewPage = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  await updateCharacterCards(urlCharacterCardsOnNewPage, page);
+  await updateCharacterCards(page);
 }
