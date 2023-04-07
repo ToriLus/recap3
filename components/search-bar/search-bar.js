@@ -1,6 +1,11 @@
 import { updateCharacterCards } from "../../index.js";
 
 export function createSearchBar() {
+  // select the container for the search bar
+  const searchBarContainer = document.querySelector(
+    '[data-js="search-bar-container"]'
+  );
+
   // Create DOM Elements for the search bar
   const searchBar = createSearchBarDomElement();
 
@@ -9,7 +14,7 @@ export function createSearchBar() {
     e.preventDefault();
     showSearchResults(e);
   });
-  return searchBar;
+  searchBarContainer.append(searchBar);
 }
 
 async function showSearchResults(e) {

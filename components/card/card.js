@@ -1,4 +1,22 @@
-export function createCharacterCard(
+export function createCharacterCards(characters) {
+  const cardContainer = document.querySelector('[data-js="card-container"]');
+  cardContainer.innerHTML = "";
+  if (characters) {
+    characters.forEach((character) => {
+      cardContainer.append(
+        createDomForCharacterCard(
+          character.name,
+          character.status,
+          character.type,
+          character.episode.length,
+          character.image
+        )
+      );
+    });
+  }
+}
+
+function createDomForCharacterCard(
   characterName = "No Name given!",
   characterStatus = "No Status given!",
   characterType = "No Type given!",
