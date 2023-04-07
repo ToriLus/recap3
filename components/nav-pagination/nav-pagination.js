@@ -6,16 +6,18 @@ import {
 import { getPage, getMaxPage, updateCharacterCards } from "../../index.js";
 
 export async function createPagination() {
+  // Create pagination DOM elements
   const prevButton = createNavButton("button--prev", "button-prev", "previous");
   const spanElement = createPaginationDomElement();
   const nextButton = createNavButton("button--next", "button-next", "next");
 
+  //
   nextButton.addEventListener("click", () => {
-    changePage(1);
+    changePage("forwards");
   });
 
   prevButton.addEventListener("click", () => {
-    changePage(-1);
+    changePage("backwards");
   });
 
   const navContainer = document.querySelector("[data-js=navigation]");
@@ -30,7 +32,7 @@ export function changePaginationContent(maxPage, page) {
 async function changePage(changeDirection) {
   let page = getPage();
   const maxPage = getMaxPage();
-  changeDirection > 0 ? ++page : --page;
+  changeDirection === "forwards" ? ++page : --page;
   if (page <= 0) page = 1;
   if (page >= maxPage) page = maxPage;
   await updateCharacterCards(page);
