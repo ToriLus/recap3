@@ -7,7 +7,6 @@ export function createSearchBar() {
     e.preventDefault();
     const searchBarData = new FormData(e.target);
     const searchQuery = Object.fromEntries(searchBarData).query;
-    const urlWithSearchQuery = `https://rickandmortyapi.com/api/character?page=1&name=${searchQuery}`;
     try {
       await updateCharacterCards(1, searchQuery);
     } catch (error) {
