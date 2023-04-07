@@ -5,7 +5,7 @@ import {
 
 import { getPage, getMaxPage, updateCharacterCards } from "../../index.js";
 
-export async function createPagination() {
+export function createPagination() {
   // Create pagination DOM elements
   const prevButton = createNavButton("button--prev", "button-prev", "previous");
   const spanElement = createPaginationDomElement();
