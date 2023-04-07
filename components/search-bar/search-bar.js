@@ -37,6 +37,7 @@ function createSearchBarDomElement() {
     type="text"
     placeholder="search characters"
     aria-label="character name"
+    maxlength="20"
   />
   <button class="search-bar__button" aria-label="search for character">
     <img
