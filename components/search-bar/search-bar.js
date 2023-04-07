@@ -5,16 +5,19 @@ export function createSearchBar() {
 
   searchBar.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const searchBarData = new FormData(e.target);
-    const searchQuery = Object.fromEntries(searchBarData).query;
-    try {
-      await updateCharacterCards(1, searchQuery);
-    } catch (error) {
-      console.log("Error: ", error);
-    }
+    showSearchResults(e);
   });
-
   return searchBar;
+}
+
+async function showSearchResults(e) {
+  const searchBarData = new FormData(e.target);
+  const searchQuery = Object.fromEntries(searchBarData).query;
+  try {
+    await updateCharacterCards(1, searchQuery);
+  } catch (error) {
+    console.log("Error: ", error);
+  }
 }
 
 function createSearchBarDomElement() {
@@ -37,5 +40,3 @@ function createSearchBarDomElement() {
   </button>`;
   return searchBar;
 }
-
-// function updateC
