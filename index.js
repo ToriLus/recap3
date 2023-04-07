@@ -25,16 +25,14 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();
     const characters = charactersDataJson.results;
-    createCharacterCards(characters);
-
     maxPage = charactersDataJson.info.pages;
     changePaginationContent(maxPage, page);
+    createCharacterCards(characters);
   } catch (error) {
-    maxPage = 1;
-    page = 1;
+    maxPage = page = "-";
     changePaginationContent(maxPage, page);
     console.log("Error:", error);
-    return alert(`Fetching data not possible!\n${error}`);
+    alert(`Fetching data not possible!\n${error}`);
   }
 }
 
