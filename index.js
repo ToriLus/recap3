@@ -28,6 +28,7 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     if (newPage) page = newPage;
     if (newSearchQuery) searchQuery = newSearchQuery;
     fetchurl = setFetchURL(page, searchQuery);
+
     cardContainer.innerHTML = "";
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();

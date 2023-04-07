@@ -1,4 +1,7 @@
-import { createNavButton } from "../nav-button/nav-button.js";
+import {
+  createNavButton,
+  createPaginationDomElement,
+} from "../nav-button/nav-button.js";
 import {
   getPage,
   getMaxPage,
@@ -8,13 +11,10 @@ import {
 const navContainer = document.querySelector("[data-js=navigation]");
 
 export async function createPagination() {
-  navContainer.replaceChildren();
   const prevButton = createNavButton("button--prev", "button-prev", "previous");
-  const spanElement = document.createElement("span");
-  spanElement.classList.add("navigation__pagination");
-  spanElement.setAttribute("data-js", "pagination");
-  spanElement.innerText = "1/1";
+  const spanElement = createPaginationDomElement();
   const nextButton = createNavButton("button--next", "button-next", "next");
+
   nextButton.addEventListener("click", () => {
     changePage(1);
   });
@@ -22,6 +22,7 @@ export async function createPagination() {
   prevButton.addEventListener("click", () => {
     changePage(-1);
   });
+
   navContainer.append(prevButton, spanElement, nextButton);
 }
 

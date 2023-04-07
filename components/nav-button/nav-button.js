@@ -6,3 +6,11 @@ export function createNavButton(className, jsClass = "", innerContent = "") {
   navButton.innerHTML = innerContent;
   return navButton;
 }
+
+export function createPaginationDomElement() {
+  const spanElement = document.createElement("span");
+  spanElement.classList.add("navigation__pagination");
+  spanElement.setAttribute("data-js", "pagination");
+  // spanElement.innerText = "1/1";
+  return spanElement;
+}
