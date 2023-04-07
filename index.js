@@ -18,9 +18,7 @@ updateCharacterCards();
 
 export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
-    if (newPage) page = newPage;
-    if (newSearchQuery) searchQuery = newSearchQuery;
-    fetchurl = setFetchURL(page, searchQuery);
+    updateStates(newPage, newSearchQuery);
 
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();
@@ -34,6 +32,12 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     console.log("Error:", error);
     alert(`Fetching data not possible!\n${error}`);
   }
+}
+
+function updateStates(newPage, newSearchQuery) {
+  if (newPage) page = newPage;
+  if (newSearchQuery) searchQuery = newSearchQuery;
+  fetchurl = setFetchURL(page, searchQuery);
 }
 
 function setFetchURL(page, searchQuery) {
