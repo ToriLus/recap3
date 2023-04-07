@@ -6,8 +6,8 @@ import { changePaginationContent } from "../components/nav-pagination/nav-pagina
 // States
 let page = 1;
 let searchQuery = "";
-let fetchurl = "";
 let maxPage = 1;
+let fetchUrl = "";
 
 // Creating and appending the search bar
 createSearchBar();
@@ -18,33 +18,36 @@ updateCharacterCards();
 
 export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
+    // Update states if required
+    updateStates(newPage, newSearchQuery);
     // Fetch Rick and Morty data
-    const charactersData = await fetch(fetchurl);
+    const charactersData = await fetch(fetchUrl);
     const charactersDataJson = await charactersData.json();
     // Get characters and set max page
     const characters = charactersDataJson.results;
-    const newMaxPage = charactersDataJson.info.pages;
+    maxPage = charactersDataJson.info.pages;
 
     // Update states,pagination and cards
-    updateStates(newPage, newSearchQuery, newMaxPage);
     changePaginationContent(maxPage, page);
     createCharacterCards(characters);
   } catch (error) {
+    console.log("fetchUrl", fetchUrl);
+    console.log("page", page);
+    console.log("max page", maxPage);
     maxPage = page = "-";
     changePaginationContent(maxPage, page);
-    alert(`Fetching data not possible!\n${error}`);
+    console.log(`Fetching data not possible!\n${error}`);
   }
 }
 
-function updateStates(newPage, newSearchQuery, newMaxPage) {
-  if (newPage) page = newPage;
-  if (newSearchQuery) searchQuery = newSearchQuery;
-  if (newMaxPage) maxPage = newMaxPage;
-  fetchurl = setFetchURL(page, searchQuery);
+function setURL(page, searchQuery = "") {
+  fetchUrl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
 }
 
-function setFetchURL(page, searchQuery) {
-  return `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+function updateStates(newPage, newSearchQuery) {
+  if (newPage) page = newPage;
+  if (newSearchQuery) searchQuery = newSearchQuery;
+  setURL(page, searchQuery);
 }
 
 export function getPage() {
