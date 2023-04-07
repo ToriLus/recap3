@@ -10,15 +10,15 @@ export function createSearchBar() {
   const searchBar = createSearchBarDomElement();
 
   // On submnit update cards according to the search query
-  searchBar.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    showSearchResults(e);
+  searchBar.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    showSearchResults(event);
   });
   searchBarContainer.append(searchBar);
 }
 
-async function showSearchResults(e) {
-  const searchBarData = new FormData(e.target);
+async function showSearchResults(event) {
+  const searchBarData = new FormData(event.target);
   let searchQuery = Object.fromEntries(searchBarData).query;
   searchQuery = searchQuery.replace(/[^a-zA-Z0-9]/g, "");
   await updateCharacterCards(1, searchQuery);
