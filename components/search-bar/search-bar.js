@@ -20,7 +20,11 @@ export function createSearchBar() {
 async function showSearchResults(event) {
   const searchBarData = new FormData(event.target);
   let searchQuery = Object.fromEntries(searchBarData).query;
+
+  // Removing inacceptable input
   searchQuery = searchQuery.replace(/[^a-zA-Z0-9]/g, "");
+  searchQuery = searchQuery.slice(0, 20);
+
   await updateCharacterCards(1, searchQuery);
 }
 

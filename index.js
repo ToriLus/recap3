@@ -25,7 +25,6 @@ export async function updateCharacterCards(
 ) {
   try {
     // Update states if required
-    console.log("updateCharacterCards", newSearchQuery);
     updateStates(newPage, newSearchQuery);
     // Fetch Rick and Morty data
     const charactersData = await fetch(fetchUrl);
@@ -35,7 +34,6 @@ export async function updateCharacterCards(
     maxPage = charactersDataJson.info.pages;
 
     // Update states,pagination and cards
-    console.log("maxPage", maxPage);
     changePaginationContent(maxPage, page);
     createCharacterCards(characters);
   } catch (error) {
