@@ -18,25 +18,27 @@ updateCharacterCards();
 
 export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
-    updateStates(newPage, newSearchQuery);
-
+    // Fetch Rick and Morty data
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();
+    // Get characters and set max page
     const characters = charactersDataJson.results;
-    maxPage = charactersDataJson.info.pages;
+    const newMaxPage = charactersDataJson.info.pages;
+
+    updateStates(newPage, newSearchQuery, newMaxPage);
     changePaginationContent(maxPage, page);
     createCharacterCards(characters);
   } catch (error) {
     maxPage = page = "-";
     changePaginationContent(maxPage, page);
-    console.log("Error:", error);
     alert(`Fetching data not possible!\n${error}`);
   }
 }
 
-function updateStates(newPage, newSearchQuery) {
+function updateStates(newPage, newSearchQuery, newMaxPage) {
   if (newPage) page = newPage;
   if (newSearchQuery) searchQuery = newSearchQuery;
+  if (newMaxPage) maxPage = newMaxPage;
   fetchurl = setFetchURL(page, searchQuery);
 }
 
