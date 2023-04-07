@@ -1,16 +1,13 @@
 import { createNavButton } from "../nav-button/nav-button.js";
 import {
   getPage,
-  setPage,
   getMaxPage,
   getSearchQuery,
-  setRickMortyURL,
-  fetchCharacters,
+  updateCharacterCards,
 } from "../../index.js";
 const navContainer = document.querySelector("[data-js=navigation]");
-const pagination = document.querySelector('[data-js="pagination"]');
 
-export function createPagination() {
+export async function createPagination() {
   navContainer.replaceChildren();
   const prevButton = createNavButton("button--prev", "button-prev", "previous");
   const spanElement = document.createElement("span");
@@ -29,7 +26,7 @@ export function createPagination() {
 }
 
 export function changePaginationContent(maxPage, page) {
-  console.log("pagination innerHTML", pagination.innerHTML);
+  const pagination = document.querySelector('[data-js="pagination"]');
   pagination.innerText = `${page} / ${maxPage}`;
 }
 
@@ -37,10 +34,9 @@ async function changePage(changeDirection) {
   let page = getPage();
   const maxPage = getMaxPage();
   const searchQuery = getSearchQuery();
-  changeDirection > 0 ? setPage(++page) : setPage(--page);
+  changeDirection > 0 ? ++page : --page;
   if (page <= 0) page = 1;
   if (page >= maxPage) page = maxPage;
-  const fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  setRickMortyURL(fetchurl);
-  await fetchCharacters(fetchurl);
+  const urlCharacterCardsOnNewPage = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+  await updateCharacterCards(urlCharacterCardsOnNewPage, page);
 }
