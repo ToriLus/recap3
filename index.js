@@ -31,9 +31,6 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     changePaginationContent(maxPage, page);
     createCharacterCards(characters);
   } catch (error) {
-    console.log("fetchUrl", fetchUrl);
-    console.log("page", page);
-    console.log("max page", maxPage);
     maxPage = page = "-";
     changePaginationContent(maxPage, page);
     console.log(`Fetching data not possible!\n${error}`);

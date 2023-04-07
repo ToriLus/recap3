@@ -21,11 +21,7 @@ async function showSearchResults(e) {
   const searchBarData = new FormData(e.target);
   let searchQuery = Object.fromEntries(searchBarData).query;
   searchQuery = searchQuery.replace(/[^a-zA-Z0-9]/g, "");
-  try {
-    await updateCharacterCards(1, searchQuery);
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+  await updateCharacterCards(1, searchQuery);
 }
 
 function createSearchBarDomElement() {
