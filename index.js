@@ -12,7 +12,7 @@ let maxPage = 1;
 // Creating and appending the search bar
 createSearchBar();
 // Create DOM Elemnts for the navigation bar
-await createPagination();
+createPagination();
 // Initial fill of the page with the cards
 await updateCharacterCards();
 
