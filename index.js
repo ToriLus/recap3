@@ -9,12 +9,12 @@ let searchQuery = "";
 let maxPage = 1;
 let fetchUrl = "";
 
-// Creating and appending the search bar
-createSearchBar();
 // Create DOM Elemnts for the navigation bar
 createPagination();
 // Initial fill of the page with the cards
 updateCharacterCards();
+// Creating and appending the search bar
+createSearchBar();
 
 export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
