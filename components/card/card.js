@@ -49,3 +49,8 @@ function createDomForCharacterCard(
   </li> `;
   return card;
 }
+
+export function emptyCardContainer() {
+  const cardContainer = document.querySelector('[data-js="card-container"]');
+  cardContainer.innerHTML = "";
+}

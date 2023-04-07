@@ -1,4 +1,7 @@
-import { createCharacterCards } from "./components/card/card.js";
+import {
+  createCharacterCards,
+  emptyCardContainer,
+} from "./components/card/card.js";
 import { createSearchBar } from "./components/search-bar/search-bar.js";
 import { createPagination } from "./components/nav-pagination/nav-pagination.js";
 import { changePaginationContent } from "../components/nav-pagination/nav-pagination.js";
@@ -33,6 +36,7 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   } catch (error) {
     maxPage = page = "-";
     changePaginationContent(maxPage, page);
+    emptyCardContainer();
     console.log(`Fetching data not possible!\n${error}`);
   }
 }
@@ -43,7 +47,7 @@ function setURL(page, searchQuery = "") {
 
 function updateStates(newPage, newSearchQuery) {
   if (newPage) page = newPage;
-  if (newSearchQuery) searchQuery = newSearchQuery;
+  searchQuery = newSearchQuery;
   setURL(page, searchQuery);
 }
 
