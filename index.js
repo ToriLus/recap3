@@ -27,7 +27,7 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
     if (newPage) page = newPage;
     if (newSearchQuery) searchQuery = newSearchQuery;
-    fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+    fetchurl = setFetchURL(page, searchQuery);
     cardContainer.innerHTML = "";
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();
@@ -52,6 +52,10 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     page = 1;
     changePaginationContent(maxPage, page);
   }
+}
+
+function setFetchURL(page, searchQuery) {
+  return `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
 }
 
 export function getPage() {
