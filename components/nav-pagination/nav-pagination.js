@@ -2,13 +2,8 @@ import {
   createNavButton,
   createPaginationDomElement,
 } from "../nav-button/nav-button.js";
-import {
-  getPage,
-  getMaxPage,
-  getSearchQuery,
-  updateCharacterCards,
-} from "../../index.js";
-const navContainer = document.querySelector("[data-js=navigation]");
+
+import { getPage, getMaxPage, updateCharacterCards } from "../../index.js";
 
 export async function createPagination() {
   const prevButton = createNavButton("button--prev", "button-prev", "previous");
@@ -23,6 +18,7 @@ export async function createPagination() {
     changePage(-1);
   });
 
+  const navContainer = document.querySelector("[data-js=navigation]");
   navContainer.append(prevButton, spanElement, nextButton);
 }
 
@@ -34,10 +30,8 @@ export function changePaginationContent(maxPage, page) {
 async function changePage(changeDirection) {
   let page = getPage();
   const maxPage = getMaxPage();
-  const searchQuery = getSearchQuery();
   changeDirection > 0 ? ++page : --page;
   if (page <= 0) page = 1;
   if (page >= maxPage) page = maxPage;
-  const urlCharacterCardsOnNewPage = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
   await updateCharacterCards(page);
 }
