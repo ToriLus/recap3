@@ -23,22 +23,15 @@ console.log(maxPage);
 await createPagination();
 await updateCharacterCards(fetchurl);
 
-searchBar.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const searchBarData = new FormData(e.target);
-  searchQuery = Object.fromEntries(searchBarData).query;
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  try {
-    await updateCharacterCards(fetchurl, 1);
-  } catch (error) {
-    console.log("nothing");
-  }
-});
-
-export async function updateCharacterCards(newURL, newPage) {
+export async function updateCharacterCards(
+  newURL,
+  newPage = null,
+  newSearchQuery = null
+) {
   try {
     fetchurl = newURL;
     if (newPage) page = newPage;
+    if (newSearchQuery) searchQuery = newSearchQuery;
     cardContainer.innerHTML = "";
     const charactersData = await fetch(fetchurl);
     const charactersDataJson = await charactersData.json();
