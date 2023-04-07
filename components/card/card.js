@@ -1,6 +1,7 @@
 export function createCharacterCards(characters) {
   const cardContainer = document.querySelector('[data-js="card-container"]');
   cardContainer.innerHTML = "";
+  cardContainer.scrollTo({ top: 0 });
   if (characters) {
     characters.forEach((character) => {
       cardContainer.append(
@@ -17,11 +18,11 @@ export function createCharacterCards(characters) {
 }
 
 function createDomForCharacterCard(
-  characterName = "No Name given!",
-  characterStatus = "No Status given!",
-  characterType = "No Type given!",
-  characterOccurrences = "No Occurences given!",
-  characterImageSource = "No Source given!"
+  characterName = "Name not specified!",
+  characterStatus = "Status not specified!",
+  characterType = "Type not specified!",
+  characterOccurrences = "Occurences not specified!",
+  characterImageSource = "Source not specified!"
 ) {
   const card = document.createElement("li");
   card.classList.add("card");
