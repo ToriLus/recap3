@@ -27,8 +27,16 @@ export async function updateCharacterCards(
     // Update states if required
     updateStates(newPage, newSearchQuery);
     // Fetch Rick and Morty data
-    const charactersData = await fetch(fetchUrl);
-    const charactersDataJson = await charactersData.json();
+    const response = await fetch(fetchUrl);
+    if (!response.ok) {
+      maxPage = page = "-";
+      changePaginationContent(maxPage, page);
+      emptyCardContainer();
+      console.error("Bad Request");
+      alert("Searched character not available!");
+      return;
+    }
+    const charactersDataJson = await response.json();
     // Get characters and set max page
     const characters = charactersDataJson.results;
     maxPage = charactersDataJson.info.pages;
