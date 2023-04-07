@@ -14,7 +14,7 @@ createSearchBar();
 // Create DOM Elemnts for the navigation bar
 createPagination();
 // Initial fill of the page with the cards
-await updateCharacterCards();
+updateCharacterCards();
 
 export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
   try {
