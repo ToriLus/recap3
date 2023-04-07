@@ -25,6 +25,7 @@ export async function updateCharacterCards(newPage = 1, newSearchQuery = "") {
     const characters = charactersDataJson.results;
     const newMaxPage = charactersDataJson.info.pages;
 
+    // Update states,pagination and cards
     updateStates(newPage, newSearchQuery, newMaxPage);
     changePaginationContent(maxPage, page);
     createCharacterCards(characters);
