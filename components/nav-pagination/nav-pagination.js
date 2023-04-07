@@ -11,15 +11,15 @@ export async function createPagination() {
   const spanElement = createPaginationDomElement();
   const nextButton = createNavButton("button--next", "button-next", "next");
 
-  //
+  // Change the pages forwards or backwards
   nextButton.addEventListener("click", () => {
     changePage("forwards");
   });
-
   prevButton.addEventListener("click", () => {
     changePage("backwards");
   });
 
+  // Update the container with elements
   const navContainer = document.querySelector("[data-js=navigation]");
   navContainer.append(prevButton, spanElement, nextButton);
 }

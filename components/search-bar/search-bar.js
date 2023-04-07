@@ -1,8 +1,10 @@
 import { updateCharacterCards } from "../../index.js";
 
 export function createSearchBar() {
+  // Create DOM Elements for the search bar
   const searchBar = createSearchBarDomElement();
 
+  // On submnit update cards according to the search query
   searchBar.addEventListener("submit", async (e) => {
     e.preventDefault();
     showSearchResults(e);
