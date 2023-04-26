@@ -56,7 +56,7 @@ them dynamically in our JavaScript.
 
 Now we can fetch the character data from the API and generate our cards with it.
 
-- Inside of the `index.js` create a function called `fetchCharacters`.
+- Inside of the `index.js` create a function called `updateCharacterCards`.
 - Use your knowledge about fetching to get the first 20 characters from the API. You can find the
   correct API endpoint in the docs.
 - Import the `createCharacterCard` function.
@@ -78,7 +78,7 @@ pagination.
 - Add an event listener on each of the next and prev buttons which do the following
   - it is prevented that the page index could go higher than the max page index or below 1
   - the page index is increased / decreased
-  - the `fetchCharacters` function is called
+  - the `updateCharacterCards` function is called
 - Update the pagination display each time characters are fetched to show the current page index and
   the current max page index.
 
@@ -93,7 +93,7 @@ their name into the search bar.
 - Modify the fetch URL again by adding another url encoded attribute `name`: append
   `&name=<searchQuery>` to the url. If the search query is an empty string, it will be ignored by
   the API, so don't worry about that.
-- Now trigger the function `fetchCharacters` whenever a submit event happens.
+- Now trigger the function `updateCharacterCards` whenever a submit event happens.
 
 > 💡 You might run into some bugs at this point. Think about how the page and max page index might
 > have to change when you start searching for only subsets of all characters.

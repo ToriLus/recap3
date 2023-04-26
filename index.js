@@ -1,92 +1,80 @@
-import { createCharacterCard } from "./components/card/card.js";
-import { createSearchBar } from "./components/search-bar/search-bar.js";
-
-import { createPagination } from "../components/nav-pagination/nav-pagination.js";
-
-const cardContainer = document.querySelector('[data-js="card-container"]');
-const searchBarContainer = document.querySelector(
-  '[data-js="search-bar-container"]'
-);
-// const searchBar = document.querySelector('[data-js="search-bar"]');
-const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
-const pagination = document.querySelector('[data-js="pagination"]');
+import {
+  createCharacterCards,
+  emptyCardContainer,
+} from "./components/card/card.js";
+import {
+  createSearchBar,
+  displayErrorBar,
+  hideErrorBar,
+} from "./components/search-bar/search-bar.js";
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
+import { changePaginationContent } from "../components/nav-pagination/nav-pagination.js";
 
 // States
 let page = 1;
 let searchQuery = "";
-let fetchurl = `https://rickandmortyapi.com/api/character?page=${page}`;
-let maxPage;
-console.log(maxPage);
+let maxPage = 1;
+let fetchUrl = "";
 
-await fetchCharacter(fetchurl);
+// Create DOM Elemnts for the navigation bar
+createPagination();
+// Initial fill of the page with the cards
+updateCharacterCards();
+// Creating and appending the search bar
+createSearchBar();
 
-export async function fetchCharacter(url) {
+export async function updateCharacterCards(
+  newPage = 1,
+  newSearchQuery = searchQuery
+) {
   try {
-    cardContainer.innerHTML = "";
-    const character = await fetch(url);
-    const fetchedCharacterData = await character.json();
-    const fetchedCharacter = fetchedCharacterData.results;
-    console.log("results", fetchedCharacter);
-    if (fetchedCharacter) {
-      fetchedCharacter.forEach((character) => {
-        cardContainer.append(
-          createCharacterCard(
-            character.name,
-            character.status,
-            character.type,
-            character.episode.length,
-            character.image
-          )
-        );
-      });
+    // Update states if required
+    updateStates(newPage, newSearchQuery);
+    // Fetch Rick and Morty data
+    const response = await fetch(fetchUrl);
+    if (!response.ok) {
+      maxPage = page = "-";
+      changePaginationContent(maxPage, page);
+      emptyCardContainer();
+      displayErrorBar();
+      console.error("Bad Request");
+      return;
     }
-    console.log("maxPage", maxPage);
-    maxPage = fetchedCharacterData.info.pages;
-    createPagination(maxPage, page);
+    hideErrorBar();
+    const charactersDataJson = await response.json();
+    // Get characters and set max page
+    const characters = charactersDataJson.results;
+    maxPage = charactersDataJson.info.pages;
+
+    // Update states,pagination and cards
+    changePaginationContent(maxPage, page);
+    createCharacterCards(characters);
   } catch (error) {
-    maxPage = 1;
-    page = 1;
-    createPagination(maxPage, page);
-    // alert("go cry in a corner");
+    maxPage = page = "-";
+    changePaginationContent(maxPage, page);
+    emptyCardContainer();
+    console.log(`Fetching data not possible!\n${error}`);
   }
 }
 
-nextButton.addEventListener("click", async () => {
-  cardContainer.innerHTML = "";
-  page = page + 1;
-  if (page >= maxPage) {
-    page = maxPage;
-  }
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  await fetchCharacter(fetchurl);
-  console.log(maxPage);
-});
-prevButton.addEventListener("click", async () => {
-  cardContainer.innerHTML = "";
-  page = page - 1;
-  if (page <= 0) {
-    page = 1;
-  }
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  await fetchCharacter(fetchurl);
-});
+function setURL(page, searchQuery = "") {
+  fetchUrl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+}
 
-searchBarContainer.append(createSearchBar());
-const searchBar = document.querySelector('[data-js="search-bar"]');
+function updateStates(newPage, newSearchQuery) {
+  if (newPage) page = newPage;
+  searchQuery = newSearchQuery;
+  setURL(page, searchQuery);
+}
 
-searchBar.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const searchBarData = new FormData(e.target);
-  const searchBarEntry = Object.fromEntries(searchBarData);
-  searchQuery = searchBarEntry.query;
+export function getPage() {
+  return page;
+}
 
-  fetchurl = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  try {
-    page = 1;
-    await fetchCharacter(fetchurl);
-  } catch (error) {
-    console.log("nothing");
-  }
-});
+export function getMaxPage() {
+  return maxPage;
+}
+
+export function getSearchQuery() {
+  return searchQuery;
+}

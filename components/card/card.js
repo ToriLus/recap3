@@ -1,9 +1,28 @@
-export function createCharacterCard(
-  characterName = "No Name given!",
-  characterStatus = "No Status given!",
-  characterType = "No Type given!",
-  characterOccurrences = "No Occurences given!",
-  characterImageSource = "No Source given!"
+export function createCharacterCards(characters) {
+  const cardContainer = document.querySelector('[data-js="card-container"]');
+  cardContainer.innerHTML = "";
+  cardContainer.scrollTo({ top: 0 });
+  if (characters) {
+    characters.forEach((character) => {
+      cardContainer.append(
+        createDomForCharacterCard(
+          character.name,
+          character.status,
+          character.type,
+          character.episode.length,
+          character.image
+        )
+      );
+    });
+  }
+}
+
+function createDomForCharacterCard(
+  characterName = "Name not specified!",
+  characterStatus = "Status not specified!",
+  characterType = "Type not specified!",
+  characterOccurrences = "Occurences not specified!",
+  characterImageSource = "Source not specified!"
 ) {
   const card = document.createElement("li");
   card.classList.add("card");
@@ -29,4 +48,9 @@ export function createCharacterCard(
   </div>
   </li> `;
   return card;
+}
+
+export function emptyCardContainer() {
+  const cardContainer = document.querySelector('[data-js="card-container"]');
+  cardContainer.innerHTML = "";
 }
